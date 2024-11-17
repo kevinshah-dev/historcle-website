@@ -35,4 +35,11 @@ export interface Challenge {
       hint: "This achievement occurred in the early 20th century, shortly after the turn of the century.",
       image: "/wright.jpg",
     },
+    {
+      id: 8,
+      date: 1517,
+      caption: "Martin Luther posts his 95 Theses on the door of All Saints' Church in Wittenberg.",
+      hint: "This act of defiance took place in the early 16th century on October 31st.",
+      image: "/95.jpg",
+    },
   ];
