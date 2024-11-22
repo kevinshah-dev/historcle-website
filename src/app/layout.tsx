@@ -26,6 +26,11 @@ export default function RootLayout({
         className={`${baskervville.className} ${baskervville.variable}`}
       >
         {children}
+        <script 
+          async 
+          src="https://platform.twitter.com/widgets.js" 
+          charSet="utf-8"
+        />  
       </body>
     </html>
   );

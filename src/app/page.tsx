@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { getDailyChallenge } from "@/utils/dailyChallengePicker";
+import Script from "next/script";
 export default function Home() {
     const dailyChallenge = getDailyChallenge();
   
@@ -55,12 +56,35 @@ export default function Home() {
       }
     };
 
+  
+  const generateShareText = () => {
+    let shareText = `Historcle #${dailyChallenge.id}\n`;
+    shareText += `🖼️ "${dailyChallenge.caption}"\n\n`;
+    shareText += "Attempts:\n";
+
+    guesses.forEach((guess, index) => {
+      const feedbackSymbol = 
+        feedback[index] === 'Correct! 🎉' ? '🎉'
+        : feedback[index] === 'Incorrect (First Guess)' ? '🚫'
+        : feedback[index] === 'Warmer 🔥' ? '🔥'
+        : feedback[index] === 'Colder 🥶' ? '🥶'
+        : '❓';
+
+      shareText += `${index + 1}. ${feedbackSymbol}\n`;
+    })
+
+    shareText += "\nPlay today: https://historcle-website.vercel.app";
+
+    return shareText;
+  }
+
   return (
     <div className="flex flex-col items-center p-6 min-h-screen bg-gray-900 text-gray-100 dark:bg-gray-900 dark:text-gray-100 font-baskervville">
+      <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8" />
       <div className="absolute top-4 right-4 flex space-x-2">
       <button
           onClick={() => setIsHintOpen(true)}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200"
+          className="bg-orange-400/90 text-white px-4 py-2 rounded hover:bg-orange-500/70 transition duration-200"
       >
         Hint
       </button>
@@ -100,7 +124,7 @@ export default function Home() {
             </p>
             <button
               onClick={() => setIsHintOpen(false)}
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200"
+              className="bg-orange-400/90 text-white px-4 py-2 rounded hover:bg-orange-500/70 transition duration-200"
             >
               Close
             </button>
@@ -155,6 +179,22 @@ export default function Home() {
         </div>
       ))}
     </div>
+      {(guesses.length >= 6 || feedback.includes("Correct! 🎉")) && (
+        <div className="flex flex-col items-center mt-4 !bg-transparent">
+          <div className="!bg-transparent"> {/* Added wrapper div */}
+            <a 
+              href={`https://twitter.com/share?ref_src=twsrc%5Etfw&text=${encodeURIComponent(generateShareText())}`}
+              className="twitter-share-button !bg-transparent" 
+              data-size="large"
+              data-show-count="false"
+              rel="noopener noreferrer"
+              target="_blank"  
+            >
+              Tweet
+            </a>
+          </div>
+        </div>
+      )}
   </div>
   );
 }
