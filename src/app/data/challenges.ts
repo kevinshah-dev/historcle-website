@@ -42,4 +42,11 @@ export interface Challenge {
       hint: "This act of defiance took place in the early 16th century on October 31st.",
       image: "/95.jpg",
     },
+    {
+      id: 9,
+      date: 1598,
+      caption: "King Henry IV of France issues the Edict of Nantes, granting religious tolerance to Protestants.",
+      hint: "This decree was issued in the latter half of the 16th century.",
+      image: "/nantes.jpg",
+    },
   ];
